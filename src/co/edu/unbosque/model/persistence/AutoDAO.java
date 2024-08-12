@@ -40,4 +40,15 @@ public class AutoDAO implements CRUDOperation<AutoDTO> {
 		return listaAutos.print();
 	}
 
+	public MyLinkedList<AutoDTO> getListaAutos() {
+		return listaAutos;
+	}
+
+	public void setListaAutos(MyLinkedList<AutoDTO> listaAutos) {
+		this.listaAutos = listaAutos;
+	}
+
+	
+	
+	
 }

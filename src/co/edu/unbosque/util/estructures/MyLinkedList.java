@@ -191,7 +191,7 @@ public class MyLinkedList<E> {
 		while (currentNode != null) {
 			listText = listText + currentNode.getInfo().toString();
 			if (currentNode.getNext() != null) {
-				listText = listText + " -> ";
+				listText = listText +"\n"+ " -> ";
 			}
 			currentNode = currentNode.getNext();
 		}

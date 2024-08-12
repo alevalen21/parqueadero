@@ -9,6 +9,7 @@ import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.MotoDTO;
 import co.edu.unbosque.view.FrameAuto;
 import co.edu.unbosque.view.FrameBicicleta;
+import co.edu.unbosque.view.FrameMoto;
 import co.edu.unbosque.view.View;
 import co.edu.unbosque.view.ViewFacade;
 
@@ -18,6 +19,7 @@ public class Controller implements ActionListener {
 	private View view;
 	private FrameAuto frameAuto;
 	private FrameBicicleta frameBicicleta;
+	private FrameMoto frameMoto;
 
 	public Controller() {
 
@@ -26,6 +28,8 @@ public class Controller implements ActionListener {
 		view = new View();
 		frameAuto = new FrameAuto();
 		frameBicicleta = new FrameBicicleta();
+		frameMoto = new FrameMoto();
+				
 		asignarOyentes();
 
 	}
@@ -33,19 +37,109 @@ public class Controller implements ActionListener {
 	public void asignarOyentes() {
 		view.getPanelPrincipal().getAuto().addActionListener(this);
 		view.getPanelPrincipal().getBicicleta().addActionListener(this);
+		view.getPanelPrincipal().getMoto().addActionListener(this);
 		frameAuto.getPanelAuto().getAceptar().addActionListener(this);
+		frameAuto.getPanelAuto().getBorrar().addActionListener(this);
+		frameAuto.getPanelAuto().getActualizar().addActionListener(this);
+		frameAuto.getPanelAuto().getVolver().addActionListener(this);
+		frameAuto.getPanelAuto().getActualizarGuardarCambios().addActionListener(this);
+		frameAuto.getPanelAuto().getVisualizar().addActionListener(this);
+		frameBicicleta.getPanelBicicleta().getAceptar().addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		
+		
+		int aux = 0;
 
 		if (e.getActionCommand().equals("AUTO")) {
 			frameAuto.setVisible(true);
 			view.setVisible(false);
 		}
-		if (e.getActionCommand().equals("BICICLETA")) {
+		if (e.getActionCommand().equals("ACTIVARBICICLETA")) {
 			frameBicicleta.setVisible(true);
 			view.setVisible(false);
 		}
+		if (e.getActionCommand().equals("ACEPTARBICICLETA")) {
+			System.out.println("hola");
+			
+			
+			
+
+			String nombre = frameBicicleta.getPanelBicicleta().getTxtNombreConductor().getText();
+					
+					
+
+			if (nombre.replaceAll(" ", "").equals("")) {
+				view.mostrarError("El nombre no puede ir vacio");
+			} else {
+				/*
+				try {
+					long cedula = Long.parseLong(frameBicicleta.getPanelBicicleta().getTxtCedulaConductor().getText());
+
+					if (!frameBicicleta.getPanelBicicleta().getTxtColorBicicleta().getText().replaceAll(" ", "")
+							.equals("")) {
+						if (frameBicicleta.getPanelBicicleta().getTxtTipoBicicleta().getText().replaceAll(" ", "").equals(e)) {
+							int capacidad = Integer
+									.parseInt(frameBicicleta.getPanelBicicleta().getTxtMaximoPasajerosAuto().getText());
+							String combustible = frameBicicleta.getPanelBicicleta().getTxtTipoCombustibleAuto().getText();
+							if (!combustible.replaceAll(" ", "").equals("")) {
+
+								String placa = frameBicicleta.getPanelBicicleta().getTxtPlacaAuto().getText();
+								if (!placa.replaceAll(" ", "").equals("")) {
+									boolean gps = false;
+									boolean cambios = false;
+									if (frameBicicleta.getPanelBicicleta().getGPS().getSelectedItem().toString().equals("SI")) {
+										gps = true;
+									}
+									if (frameBicicleta.getPanelBicicleta().getVelocidades().getSelectedItem().toString()
+											.equals("SI")) {
+										cambios = true;
+									}
+									mf.getAutoDao().create(
+											new AutoDTO(nombre, cedula, capacidad, combustible, placa, gps, cambios));
+
+									view.mostrarMensaje("Auto creado exitosamente");
+
+									// Limpiar campos
+									frameAuto.getPanelAuto().getTxtNombreConductor().setText("");
+									frameAuto.getPanelAuto().getTxtCedulaConductor().setText("");
+									frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().setText("");
+									frameAuto.getPanelAuto().getTxtTipoCombustibleAuto().setText("");
+									frameAuto.getPanelAuto().getTxtPlacaAuto().setText("");
+								} else {
+									view.mostrarError("Debes colocar una placa");
+
+								}
+
+							} else {
+								view.mostrarError("El combustible está vacio");
+							}
+
+						} else {
+							view.mostrarError("Número no valido de capacidad");
+						}
+					} else {
+						view.mostrarError("El Color está vacia");
+					}
+
+				} catch (Exception err) {
+					// TODO: handle exception
+					view.mostrarError("la cédula no es valida");
+				}
+				*/
+			}
+			
+
+		}
+		
+		
+		
+		if (e.getActionCommand().equals("MOTO")) {
+			frameMoto.setVisible(true);
+			view.setVisible(false);
+		}
+		
 		if (e.getActionCommand().equals("ACEPTAR")) {
 
 			String nombre = frameAuto.getPanelAuto().getTxtNombreConductor().getText();
@@ -107,9 +201,128 @@ public class Controller implements ActionListener {
 					view.mostrarError("la cédula no es valida");
 				}
 			}
-			// menuOpcionesAuto();
+			
+			
+			
+			
+			
 		}
+		if (e.getActionCommand().equals("BORRARAUTO")) {
+			
+			int posicion = view.lista("borrar Carros","Borrar por Posicion", mf.getAutoDao().getListaAutos().size());
+			if(posicion!=-1) {
+				view.mostrarMensaje("Datos del carro a eliminar: \n\n"+ mf.getAutoDao().getListaAutos().get(posicion-1).toString());;
+				mf.getAutoDao().delete(posicion-1);
+				view.mostrarMensaje("Se elimino la posicion " + posicion + " correctamente" );
+			}
+		}
+		if (e.getActionCommand().equals("ACTUALIZARAUTO")) {
+			
+			int posicion = view.lista("Actualizar Carros","Buscar por Posicion", mf.getAutoDao().getListaAutos().size());
+			if(posicion!=-1) {
+				
+				aux = posicion-1;
+				
+				frameAuto.getPanelAuto().getTxtNombreConductor().setText(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().getNombreConductor());
+				frameAuto.getPanelAuto().getTxtCedulaConductor().setText(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().getCedulaConductor()+"");
+				frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().setText(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().getNumeroPasajeros()+"");
+				frameAuto.getPanelAuto().getTxtTipoCombustibleAuto().setText(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().getCombustible());
+				frameAuto.getPanelAuto().getTxtPlacaAuto().setText(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().getPlaca());
+				
+				if(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().isTieneGPS()) {
+					frameAuto.getPanelAuto().getGPS().setSelectedItem("SI");
+				}else {
+					frameAuto.getPanelAuto().getGPS().setSelectedItem("NO");
+				}
+				
+				if(mf.getAutoDao().getListaAutos().get(posicion-1).getInfo().isCambiosAutomaticos()) {
+					frameAuto.getPanelAuto().getGPS().setSelectedItem("SI");
+				}else {
+					frameAuto.getPanelAuto().getGPS().setSelectedItem("NO");
+				}
+				frameAuto.getPanelAuto().getActualizarGuardarCambios().setVisible(true);
+			}
+		}
+		if (e.getActionCommand().equals("GUARDARCAMBIOSAUTO")) {
+			String nombre = frameAuto.getPanelAuto().getTxtNombreConductor().getText();
 
+			if (nombre.replaceAll(" ", "").equals("")) {
+				view.mostrarError("El nombre no puede ir vacio");
+			} else {
+				try {
+					long cedula = Long.parseLong(frameAuto.getPanelAuto().getTxtCedulaConductor().getText());
+
+					if (!frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().getText().replaceAll(" ", "")
+							.equals("")) {
+						if (frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().getText().matches("[0-9]")) {
+							int capacidad = Integer
+									.parseInt(frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().getText());
+							String combustible = frameAuto.getPanelAuto().getTxtTipoCombustibleAuto().getText();
+							if (!combustible.replaceAll(" ", "").equals("")) {
+
+								String placa = frameAuto.getPanelAuto().getTxtPlacaAuto().getText();
+								if (!placa.replaceAll(" ", "").equals("")) {
+									boolean gps = false;
+									boolean cambios = false;
+									if (frameAuto.getPanelAuto().getGPS().getSelectedItem().toString().equals("SI")) {
+										gps = true;
+									}
+									if (frameAuto.getPanelAuto().getVelocidades().getSelectedItem().toString()
+											.equals("SI")) {
+										cambios = true;
+									}
+									
+									mf.getAutoDao().update(aux, new AutoDTO(nombre, cedula, capacidad, combustible,
+											placa, gps, cambios));
+									view.mostrarMensaje("Se actualizo exitosamente");
+									// Limpiar campos
+									frameAuto.getPanelAuto().getTxtNombreConductor().setText("");
+									frameAuto.getPanelAuto().getTxtCedulaConductor().setText("");
+									frameAuto.getPanelAuto().getTxtMaximoPasajerosAuto().setText("");
+									frameAuto.getPanelAuto().getTxtTipoCombustibleAuto().setText("");
+									frameAuto.getPanelAuto().getTxtPlacaAuto().setText("");
+									
+									frameAuto.getPanelAuto().getActualizarGuardarCambios().setVisible(false);
+									aux = 0;
+								} else {
+									view.mostrarError("Debes colocar una placa");
+
+								}
+
+							} else {
+								view.mostrarError("El combustible está vacio");
+							}
+
+						} else {
+							view.mostrarError("Número no valido de capacidad");
+						}
+					} else {
+						view.mostrarError("La capacidad está vacia");
+					}
+
+				} catch (Exception err) {
+					// TODO: handle exception
+					view.mostrarError("la cédula no es valida");
+				}
+			}
+		}
+		if (e.getActionCommand().equals("VOLVER")) {
+			view.setVisible(true);
+			frameAuto.setVisible(false);
+			frameBicicleta.setVisible(false);
+			frameMoto.setVisible(false);
+		}
+		if (e.getActionCommand().equals("MOSTRARAUTO")) {
+
+			String mensaje = mf.getAutoDao().print().toString();
+			if(mensaje.equals("")) {
+				view.mostrarMensaje("No hay carros registrados");
+
+			}else {
+				view.mostrarMensaje(mf.getAutoDao().print());
+			}
+		}
+	
 	}
 
 	public void menuOpcionesAuto() {
@@ -392,7 +605,7 @@ public class Controller implements ActionListener {
 			switch (opcion) {
 
 			case 1: {
-
+				menuOpcionesAuto();
 				break;
 			}
 			case 2: {

@@ -72,7 +72,7 @@ public class PanelBicicleta extends JPanel {
 		Color colorboton1 = new Color(127, 179, 213);
 
 		aceptar = new JButton("Crear");
-		aceptar.setActionCommand("ACEPTAR");
+		aceptar.setActionCommand("ACEPTARBICICLETA");
 		aceptar.setBackground(colorboton1);
 		aceptar.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		aceptar.setEnabled(true);

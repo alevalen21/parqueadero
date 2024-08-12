@@ -49,7 +49,7 @@ public class PanelPrincipal extends JPanel {
         auto.setBackground(Color.LIGHT_GRAY);
 	
         bicicleta = createButton("Bicicleta");
-		bicicleta.setActionCommand("BICICLETA");
+		bicicleta.setActionCommand("ACTIVARBICICLETA");
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridheight = 1; 
@@ -59,6 +59,7 @@ public class PanelPrincipal extends JPanel {
 
         
         moto = createButton("Moto");
+        moto.setActionCommand("MOTO");
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.gridheight = 2; 

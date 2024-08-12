@@ -34,6 +34,9 @@ public class PanelAuto extends JPanel {
 	private JButton aceptar;
 	private JButton volver;
 	private JButton visualizar;
+	private JButton actualizar;
+	private JButton actualizarGuardarCambios;
+
 	private JButton borrar;
 
 	public PanelAuto() {
@@ -86,13 +89,29 @@ public class PanelAuto extends JPanel {
 		volver.setEnabled(true);
 
 		visualizar = new JButton("Mostrar Información");
-		visualizar.setActionCommand("MOSTRAREMISORA");
+		visualizar.setActionCommand("MOSTRARAUTO");
 		visualizar.setBackground(colorboton1);
 		visualizar.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		visualizar.setEnabled(true);
+		
+		
+		actualizar = new JButton("Actualizar");
+		actualizar.setActionCommand("ACTUALIZARAUTO");
+		actualizar.setBackground(colorboton1);
+		actualizar.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		actualizar.setEnabled(true);
+		
+		
+		
+		actualizarGuardarCambios= new JButton("Guardar Cambios");
+		actualizarGuardarCambios.setActionCommand("GUARDARCAMBIOSAUTO");
+		actualizarGuardarCambios.setBackground(colorboton1);
+		actualizarGuardarCambios.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		actualizarGuardarCambios.setEnabled(true);
+		actualizarGuardarCambios.setVisible(false);
 
 		borrar = new JButton("Borrar");
-		borrar.setActionCommand("BORRAREMISORA");
+		borrar.setActionCommand("BORRARAUTO");
 		borrar.setBackground(colorboton1);
 		borrar.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		borrar.setEnabled(true);
@@ -121,8 +140,11 @@ public class PanelAuto extends JPanel {
 		add(aceptar);
 		add(visualizar);
 		add(borrar);
+		
+		add(actualizar);
+	
 		add(volver);
-
+		add(actualizarGuardarCambios);
 	}
 
 	public JLabel getEtiquetaNombreConductor() {
@@ -269,5 +291,23 @@ public class PanelAuto extends JPanel {
 		this.borrar = borrar;
 	}
 
+	public JButton getActualizar() {
+		return actualizar;
+	}
+
+	public void setActualizar(JButton actualizar) {
+		this.actualizar = actualizar;
+	}
+
+	public JButton getActualizarGuardarCambios() {
+		return actualizarGuardarCambios;
+	}
+
+	public void setActualizarGuardarCambios(JButton actualizarGuardarCambios) {
+		this.actualizarGuardarCambios = actualizarGuardarCambios;
+	}
+
+	
+	
 	
 }

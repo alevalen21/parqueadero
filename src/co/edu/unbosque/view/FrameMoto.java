@@ -10,14 +10,14 @@ public class FrameMoto extends JFrame   {
 	private PanelMoto panelMoto;
 
 	public FrameMoto () {
-		setTitle("Universal RadioMusic");
+		setTitle(" --- Bienvenido al Menu de Motos --- ");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setSize(600,400);
 		this.setLocationRelativeTo(null);
 		this.setLayout(new GridLayout());
 		panelMoto= new PanelMoto();
-		add(panelMoto, BorderLayout.CENTER);
+		add(panelMoto);
 		this.setVisible(false);
 	}
 
